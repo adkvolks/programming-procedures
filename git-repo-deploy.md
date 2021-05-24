@@ -16,7 +16,7 @@ SSH into server and do the following procedures.
   * Escape to get out of insert mode
   * :wq to save and exit
 
-`#!/bin/bash
+```#!/bin/bash<br>
 TARGET="/home/[[domain-folder]]/public_html"
 GIT_DIR="/home/[[domain-folder]]/[[repo-folder]]/[[sub-repo-folder]]"
 BRANCH="master"
@@ -34,7 +34,8 @@ do
         else
                 echo "Ref $ref received. Doing nothing: only the ${BRANCH} branch may be deployed on this server."
         fi
-done`
+done
+```
   
 ## Setup Local Repo
 * Create local repo on your computer
