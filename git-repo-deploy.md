@@ -15,14 +15,33 @@ SSH into server and do the following procedures.
   * Press i to go into insert mode
   * Escape to get out of insert mode
   * :wq to save and exit
+
+`#!/bin/bash
+TARGET="/home/[[domain-folder]]/public_html"
+GIT_DIR="/home/[[domain-folder]]/[[repo-folder]]/[[sub-repo-folder]]"
+BRANCH="master"
+
+while read oldrev newrev ref
+do
+        # only checking out the master (or whatever branch you would like to deploy)
+        if [ "$ref" = "refs/heads/$BRANCH" ];
+        then
+                echo "Ref $ref received. Deploying ${BRANCH} branch to production..."
+                git --work-tree=$TARGET --git-dir=$GIT_DIR checkout -f $BRANCH -- dist
+                cd $TARGET
+                cp -r dist/* .
+                rm -rf dist
+        else
+                echo "Ref $ref received. Doing nothing: only the ${BRANCH} branch may be deployed on this server."
+        fi
+done`
   
 ## Setup Local Repo
 * Create local repo on your computer
   * `git init`
 * Link with Remote Repo
-  * `git remote add [remote-name] ssh://user@host/[folder-location]` 
+  * `git remote add [remote-name] ssh://user@host/home/[[domain-folder]]/[[repo-folder]]` 
   * [remote-name] - typically go with production
-  * [folder-location] - location on the server setup in step 1
 * Push to branch - DONE
   * `git push [remote-name]`
     
